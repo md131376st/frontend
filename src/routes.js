@@ -5,8 +5,7 @@ import BookCard from "./Components/card/bookCard";
 
 function AppRoutes(props) {
     return  <Routes>
-        <Route path="bookshelf" element={<FullFeaturedCrudGrid/>}/>
-        <Route path="bookshelf/:id" element={<BookCard />}/>
+        <Route path="/:id" element={<BookCard />}/>
         <Route path="*" element={<FullFeaturedCrudGrid/>} />
         {/*<Route index </>*/}
     </Routes>

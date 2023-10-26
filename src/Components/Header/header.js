@@ -1,17 +1,18 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import PopUpAuth from "../authentication/popupAuth";
+import {Nav} from "react-bootstrap";
 
-const Header = () =>{
+const Header = (props) =>{
     return (
         <Navbar  bg="dark" data-bs-theme="dark">
             <Container>
                 <Navbar.Brand href="#home"> Bookshelf </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-
-                    {/*<Navbar.Text>*/}
-                    {/*    Signed in as: <a href="login">Mark Otto</a>*/}
-                    {/*</Navbar.Text>*/}
+                    <Nav>
+                    <PopUpAuth user={props.user} setUser={props.setUser} setLoggedIn={props.setLoggedIn} />
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

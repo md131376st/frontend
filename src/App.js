@@ -57,9 +57,10 @@ function App() {
 
   return (
     <div className="App">
-        <Header/>
+        <ToastContainer />
+        <Header user={user} setUser={setUser} setLoggedIn={setLoggedIn}/>
           <Outlet/>
-            <ToastContainer />
+
           <div className="content">
               <AppRoutes />
           </div>

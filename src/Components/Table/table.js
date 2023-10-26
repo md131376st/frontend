@@ -211,7 +211,7 @@ export default function FullFeaturedCrudGrid() {
             enableEditing: false, //disable editing on this column
             enableSorting: false,
             Cell: ({ cell }) => (
-                <Link href={`bookshelf/${cell.getValue()}`}>
+                <Link href={`/${cell.getValue()}`}>
                     {cell.getValue()}
                 </Link>
             ),
