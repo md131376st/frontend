@@ -124,7 +124,7 @@ export default function FullFeaturedCrudGrid() {
     };
 
     const handleCancelRowEdits = () => {
-        setValidationErrors({});
+         setValidationErrors({});
     };
 
     const handleDeleteRow = useCallback(
