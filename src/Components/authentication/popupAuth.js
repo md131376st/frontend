@@ -37,7 +37,10 @@ const PopUpAuth = (props) => {
                                  hide={hidelogin}
                                  signup={showsignupfn}
                                  setLoggedIn ={props.setLoggedIn}
-                                 key={showlogin}/>
+                                 key={showlogin}
+                                 user = {props.user}
+                                 setUser={props.setUser}
+            />
             <StandaredSignUpPopUp show={showSignUp}
                                   hide={hideSignup}
                                   login={showloginfn}

@@ -10,9 +10,16 @@ const Header = (props) =>{
                 <Navbar.Brand href="#home"> Bookshelf </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-                    <Nav>
-                    <PopUpAuth user={props.user} setUser={props.setUser} setLoggedIn={props.setLoggedIn} />
+                    { !props.loggedIn &&
+                        <Nav>
+                        <PopUpAuth user={props.user} setUser={props.setUser} setLoggedIn={props.setLoggedIn} />
                     </Nav>
+                    }
+                    { props.loggedIn &&
+                        <Navbar.Text>
+                            Signed in as: {props.user.username}
+                        </Navbar.Text>
+                    }
                 </Navbar.Collapse>
             </Container>
         </Navbar>

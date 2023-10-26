@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App">
         <ToastContainer />
-        <Header user={user} setUser={setUser} setLoggedIn={setLoggedIn}/>
+        <Header user={user} setUser={setUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
           <Outlet/>
 
           <div className="content">

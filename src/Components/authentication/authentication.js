@@ -18,6 +18,7 @@ import {CloseButton, Row} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import {logIn} from "../../Api/userApi";
 import MessageBox from "../MessageBox/MessageBox";
+import jwt from 'jwt-decode';
 
 
 function Authentication(props) {
@@ -36,6 +37,8 @@ function Authentication(props) {
             }).then(
                 res => {
                     if (res.status === 200) {
+                        props.setUser( jwt(res.data.refresh));
+                        localStorage.setItem('token', res.data.refresh);
                         props.setLoggedIn(true)
                         MessageBox({
                             type: "success",
