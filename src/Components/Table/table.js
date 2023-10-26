@@ -11,12 +11,14 @@ import {
     Tooltip
 } from '@mui/material';
 import {CreateNewAccountModal} from "./CreateNewAccountModal";
+import {useNavigate} from "react-router-dom";
 export default function FullFeaturedCrudGrid() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [tableData, setTableData] = React.useState([]);
     const [rowModesModel, setRowModesModel] = React.useState({});
     const [validationErrors, setValidationErrors] = useState({});
+    const navigate = useNavigate();
     const getBooks = async () => {
         try{
             const data = await getAllBooks();
@@ -211,9 +213,9 @@ export default function FullFeaturedCrudGrid() {
             enableEditing: false, //disable editing on this column
             enableSorting: false,
             Cell: ({ cell }) => (
-                <Link href={`/${cell.getValue()}`}>
+                <Button variant="outlined"  color="secondary" onClick={event => (navigate(`/${cell.getValue()}`))}>
                     {cell.getValue()}
-                </Link>
+                </Button>
             ),
             muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
                 ...getCommonEditTextFieldProps(cell),
@@ -301,7 +303,8 @@ export default function FullFeaturedCrudGrid() {
                     onEditingRowSave={handleSaveRowEdits}
                     onEditingRowCancel={handleCancelRowEdits}
                     initialState={{  showColumnFilters: true }}
-                    positionToolbarAlertBanner="bottom"
+                    positionToolbarAlertBanner= "bottom"
+                    positionActionsColumn = "last"
                     renderRowActions={({ row, table }) => (
                         <Box sx={{ display: 'flex', gap: '1rem' }}>
                             <Tooltip arrow placement="left" title="Edit">

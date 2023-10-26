@@ -37,8 +37,8 @@ function Authentication(props) {
             }).then(
                 res => {
                     if (res.status === 200) {
-                        props.setUser( jwt(res.data.refresh));
-                        localStorage.setItem('token', res.data.refresh);
+                        props.setUser( jwt(res.data.access));
+                        localStorage.setItem('token', res.data.access);
                         props.setLoggedIn(true)
                         MessageBox({
                             type: "success",
