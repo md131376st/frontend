@@ -24,11 +24,11 @@ export const getAllBooks = async () => {
 export const getOneBook = async (id) => {
     try {
         const response = await axios.get(baseurl + '/bookshelf/'+id);
-
         return response.data;
 
     } catch (error) {
         console.error('Error fetching data:', error);
+        return null
     }
 
 }

@@ -103,6 +103,25 @@ const BookCard = (props)=>{
                 <Row/>
             </Container>
             }
+            {
+                !book &&
+                <Container>
+                    <Row />
+
+                <img width="128" height="128" src="https://img.icons8.com/external-elyra-zulfa-mahendra/64/external-error-cyber-crimes-elyra-zulfa-mahendra.png" alt="external-error-cyber-crimes-elyra-zulfa-mahendra"/>
+
+                        <Row>
+                            <Col/>
+                            <Col>
+                                Book not found please try later
+                            </Col>
+                            <Col/>
+
+                        </Row>
+                    <Row />
+                </Container>
+
+            }
         </>
     )
 }
