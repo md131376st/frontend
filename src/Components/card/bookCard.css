@@ -1,3 +1,6 @@
  .row{
-     min-height: 25px;
+     min-height: 30px;
  }
+.accordion{
+    margin: 15px;
+}

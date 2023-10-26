@@ -32,6 +32,17 @@ export const getOneBook = async (id) => {
     }
 
 }
+export const getBookDetail = async (id) => {
+    try {
+        const response = await axios.get(baseurl + '/bookshelf/ai/'+id);
+        return response.data;
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null
+    }
+
+}
 export const updateBook = async (book) => {
     try {
 

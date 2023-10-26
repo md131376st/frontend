@@ -1,24 +1,28 @@
 import * as React from 'react'
 import {useParams} from "react-router-dom";
 import { useEffect, useState} from "react";
-import { getOneBook} from "../../Api/bookApi";
+import {getBookDetail, getOneBook} from "../../Api/bookApi";
 import MessageBox from "../MessageBox/MessageBox";
 import Card from 'react-bootstrap/Card';
-import {Col, ListGroup, Row} from "react-bootstrap";
+import {Col, ListGroup, Row, Accordion} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
-import {Chip, Divider, Rating, Stack} from "@mui/material";
+import { Chip, Divider, Rating, Stack} from "@mui/material";
+
 import "./bookCard.css"
 
 const BookCard = (props)=>{
     const [loading, setLoading] = useState(false);
     const [book, setBook] = useState();
     let { id } = useParams();
+    const [detail, setDetail] = useState("")
 
     const getBook = async () => {
         try{
             const data = await getOneBook(id);
             console.log(data)
             setBook(data);
+            const detail_ =  await getBookDetail(id);
+            setDetail(detail_.summary)
             setLoading(false);
         }catch (e) {
             MessageBox({
@@ -35,10 +39,10 @@ const BookCard = (props)=>{
                 type: "error",
                 text: "server not available"
             });
-
         });
         setLoading(true);
     },[] )
+
     return(
         <>
             { book &&
@@ -52,8 +56,17 @@ const BookCard = (props)=>{
                             <Card.Body>
                                 <Card.Title>{book.title}</Card.Title>
                                 <Card.Text> book details</Card.Text>
-
                                 <Container>
+                                    <Row>
+                                        <Accordion >
+                                            <Accordion.Item eventKey="0">
+                                                <Accordion.Header> Book summary </Accordion.Header>
+                                                <Accordion.Body>
+                                                    {detail}
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                    </Row>
                                     <Row>
                                     <Col>
                                         <Stack gap={1}>
@@ -93,7 +106,6 @@ const BookCard = (props)=>{
 
                                     </Row>
                                 </Container>
-
 
                             </Card.Body>
                         </Card>
