@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import ReactErrorBoundary from "./Components/error/ErrorBoundry";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ReactErrorBoundary>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+          </ReactErrorBoundary>
   </React.StrictMode>
 );
 
