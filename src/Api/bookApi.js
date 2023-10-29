@@ -87,3 +87,36 @@ export const deleteBook = async (id) => {
 
 }
 
+export const reviewBook = async (id) => {
+    try {
+        return await axios.get(baseurl + `/bookshelf/${id}/`);
+    } catch (error) {
+        console.error('Error getting data', error);
+
+    }
+
+}
+
+
+export const createReview = async (id,data) => {
+    try {
+
+    return  await fetch(baseurl + `/bookshelf/${id}/review/`, {
+        method: 'POST',
+        credentials: 'include', // Include credentials (cookies)
+        headers: {
+            'Content-Type': 'application/json',
+
+        },
+        body: JSON.stringify(data),
+    });
+
+
+    //     return await axios.post(baseurl + `/bookshelf/${id}/review/`, data,
+
+    } catch (error) {
+        console.error('Error creating data', error);
+
+    }
+
+}

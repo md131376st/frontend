@@ -3,7 +3,9 @@ import axios from "axios";
 
 export const logIn = async (credentials) => {
     try {
-        return await axios.post(baseurl + `/bookshelf/login/`, credentials)
+        return await axios.post(baseurl + `/bookshelf/login/`,
+            credentials,
+            )
     } catch (e) {
         if (e === 401)
             throw "Incorrect username or password."

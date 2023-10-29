@@ -4,17 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 import "react-toastify/dist/ReactToastify.css";
 import ReactErrorBoundary from "./Components/error/ErrorBoundry";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+      <CookiesProvider>
       <ReactErrorBoundary>
               <BrowserRouter>
                 <App />
               </BrowserRouter>
           </ReactErrorBoundary>
+      </CookiesProvider>
   </React.StrictMode>
 );
 

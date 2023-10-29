@@ -8,52 +8,24 @@ import {ToastContainer} from "react-toastify";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {logIn} from "./Api/userApi";
+import jwt from "jwt-decode";
 
 function App() {
     const [user, setUser] = useState(undefined);
     const [loggedIn, setLoggedIn] = useState(false);
-    const [loginErr, setLoginErr] = useState(undefined);
-    const [studyPlan, setStudyPlan] = useState([]);
-    // useEffect(() => {
-    //     const checkAuth = async () => {
-    //         try {
-    //             const user = await getUserInfo(); // we have the user info here
-    //             setLoginErr(undefined);
-    //             setLoggedIn(true);
-    //             if (user.studyplan !== 0) {
-    //                 const courseList = await API.getStudyPlan(user.id);
-    //                 setStudyPlan(courseList);
-    //             }
-    //             setUser(user);
-    //         } catch (e) {
-    //             console.log(e)
-    //         }
-    //     };
-    //     checkAuth();
-    // }, []);
+    useEffect(() => {
+        // console.log("hi")
+        // const userdata = localStorage.getItem('access_token')
+
+        // if (userdata!==undefined){
+        //     setUser( jwt(userdata));
+        //     setLoggedIn(true);
+        // }
+    },[]
+    );
 
     const navigate = useNavigate();
-    const handleLogin = async (credentials) => {
-        try {
-            const user = await logIn(credentials);
-            setLoginErr(undefined);
-            setLoggedIn(true);
-            setUser(user);
-            navigate('/');
 
-        } catch (err) {
-
-            setLoginErr(err);
-            navigate('/login');
-        }
-    };
-
-    // const handleLogout = async () => {
-    //         await API.logOut();
-    //     setLoggedIn(false);
-    //     setUser(undefined);
-    //     navigate('/');
-    // };
 
   return (
     <div className="App">
@@ -62,7 +34,7 @@ function App() {
           <Outlet/>
 
           <div className="content">
-              <AppRoutes />
+              <AppRoutes  user = {user}/>
           </div>
 
 

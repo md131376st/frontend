@@ -7,7 +7,7 @@ return<>
         <Col/>
         <Col>
             <img src={require("../../assets/image/1.webp")} alt={"error"}/>
-            <p> Something went wrong please try latter </p>
+            <p> Something went wrong please try later </p>
         </Col>
         <Col/>
     </Container>

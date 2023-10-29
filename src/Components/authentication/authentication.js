@@ -19,6 +19,7 @@ import Container from "react-bootstrap/Container";
 import {logIn} from "../../Api/userApi";
 import MessageBox from "../MessageBox/MessageBox";
 import jwt from 'jwt-decode';
+import axios from "axios";
 
 
 function Authentication(props) {
@@ -37,8 +38,11 @@ function Authentication(props) {
             }).then(
                 res => {
                     if (res.status === 200) {
+
+                        localStorage.setItem('access_token', res.access);
+                        localStorage.setItem('refresh_token', res.refresh);
                         props.setUser( jwt(res.data.access));
-                        localStorage.setItem('token', res.data.access);
+                        console.log(jwt(res.data.access))
                         props.setLoggedIn(true)
                         MessageBox({
                             type: "success",
