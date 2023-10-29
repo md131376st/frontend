@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {useParams} from "react-router-dom";
 import { useEffect, useState} from "react";
-import {createReview, getBookDetail, getOneBook} from "../../Api/bookApi";
+import {createReview, getBookDetail, getOneBook, reviewBook} from "../../Api/bookApi";
 import MessageBox from "../MessageBox/MessageBox";
 import Card from 'react-bootstrap/Card';
 import {Col,Button, ListGroup, Row, Accordion, Form} from "react-bootstrap";
@@ -17,14 +17,18 @@ const BookCard = (props)=>{
     const [detail, setDetail] = useState("");
     const [comment, setComment] = useState("");
     const [rate, setRate] = useState(0);
+    const [reviews, setReviews] = useState([]);
 
     const getBook = async () => {
         try{
             const data = await getOneBook(id);
-            console.log(data)
             setBook(data);
-            // const detail_ =  await getBookDetail(id);
-            // setDetail(detail_.summary)
+            const detail_ =  await getBookDetail(id);
+            setDetail(detail_.summary)
+            const review = await reviewBook(id);
+            setReviews(review);
+
+
             setLoading(false);
         }catch (e) {
             MessageBox({
@@ -47,34 +51,47 @@ const BookCard = (props)=>{
 
     const submitReview= async  () =>{
        try {
-            await createReview(id,{
-               "review":comment,
-               "rate":rate,
-               "book":id,
-               "user": props.user.user_id
-           }).then(
-               res =>{
-                   if (res.status===201) {
+           if (rate === 0 || comment.trim() === '') {
+               MessageBox({
+                   type: "error",
+                   text: "Both Book rate and your comment are required."
+               });
+               return
+           }
+          else {
+
+
+               await createReview(id, {
+                   "review": comment,
+                   "rate": rate,
+                   "book": id,
+                   "user": props.user.user_id
+               }).then(
+                   res => {
+                       if (res.status === 201) {
+                           MessageBox({
+                               type: "success",
+                               text: "Review successfully updated"
+                           });
+                       }
+                   }
+               ).catch((error) => {
+                   console.log("hi")
+                   if (error.response && error.response.status === 404) {
                        MessageBox({
-                           type: "success",
-                           text: "Review successfully updated"
+                           type: "error",
+                           text: "book doesn't exist or invalid user "
+                       });
+                   } else {
+                       MessageBox({
+                           type: "error",
+                           text: "bed request"
                        });
                    }
-               }
-           ).catch((error)=> {
-               if (error.response && error.response.status === 404) {
-                   MessageBox({
-                       type: "error",
-                       text: "book doesn't exist or invalid user "
-                   });
-               } else {
-                   MessageBox({
-                       type: "error",
-                       text: error.code
-                   });
-               }
-               ;
-           });
+                   ;
+               });
+           }
+
 
 
        }catch (e) {
@@ -141,7 +158,9 @@ const BookCard = (props)=>{
                                         <Divider/>
                                     </Row>
                                     {
-                                      props.user && <Form >
+                                      props.user ?
+                                        <>
+                                        <Form >
                                             <Row>
                                                 <Col>
                                                     <div>Book rate: </div>
@@ -151,26 +170,42 @@ const BookCard = (props)=>{
                                                 <Col  xs={7} />
 
                                             </Row>
-
+                                            <Row>
                                                 <Form.Group className="d-flex flex-row bd-highlight 3md"
                                                             controlId="exampleForm.ControlInput1">
-                                                    <Form.Control  className="d-flex flex-row bd-highlight 3md"
+                                                    <Form.Control className={"commentinput"}
                                                                    value={comment}
                                                                    onChange={e=>setComment(e.target.value)}
                                                                    type="text" placeholder="Enter your comment.." />
                                                 </Form.Group>
+                                            </Row>
                                         <Row>
-
-
-                                            <Button className={"commentPost"}  onClick={submitReview} >
+                                            <Button  onClick={submitReview} >
                                                 Post
                                             </Button>
-
                                         </Row>
-
-
-
                                         </Form>
+                                            <Row>
+                                                <Divider/>
+                                            </Row>
+                                            {
+                                                Array.isArray(reviews) &&  reviews.map((rev) => (
+                                                    <Row>
+                                                    <Card key={rev.id}>
+                                                        <Card.Body>
+                                                            <Rating name="read-only" value={rev.rate} />
+                                                            <Card.Text>{rev.review}</Card.Text>
+                                                        </Card.Body>
+                                                    </Card>
+                                                    </Row>
+                                                ))
+                                            }
+
+                                        </>
+                                          :
+                                         (
+                                        <p>Please log in to post a review and see existing reviews.</p>
+                                        )
                                     }
 
 
